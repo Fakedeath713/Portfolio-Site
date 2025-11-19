@@ -1,0 +1,48 @@
+---
+// src/layouts/Layout.astro
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white overflow-x-hidden">
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-purple-500 to-purple-700 rounded;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gradient-to-b from-purple-700 to-purple-500;
+  }
+  
+  /* Selection */
+  ::selection {
+    @apply bg-purple-600 text-white;
+  }
+  
+  ::-moz-selection {
+    @apply bg-purple-600 text-white;
+  }
+</style>

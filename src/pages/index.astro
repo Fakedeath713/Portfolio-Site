@@ -1,0 +1,109 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Resume from '../components/Resume.astro';
+import Portfolio from '../components/Portfolio.astro';
+import VideoGallery from '../components/VideoGallery.astro';
+
+// Experience data
+const experiences = [
+  {
+    date: '2020 - Günümüz',
+    title: 'Kıdemli Tasarımcı',
+    company: 'Kendi Markası',
+    description: 'Kendi moda markamı kurarak, özgün koleksiyonlar tasarlıyor ve pazar liderliği hedefiyle çalışıyorum.'
+  },
+  {
+    date: '2018 - 2020',
+    title: 'Moda Tasarımcısı',
+    company: 'Öncü Moda Markası',
+    description: 'Hazır giyim koleksiyonları için yenilikçi tasarımlar geliştirdim ve markanın pazar konumunu güçlendirdim.'
+  },
+  {
+    date: '2016 - 2018',
+    title: 'Asistan Tasarımcı',
+    company: 'Büyük Moda Evi',
+    description: 'Moda endüstrisindeki ilk adımlarımı atarak, koleksiyon geliştirme süreçlerinde aktif rol aldım.'
+  }
+];
+
+// Education data
+const education = [
+  {
+    date: '2016 - 2020',
+    degree: 'Moda Tasarımı',
+    institution: 'Marmara Üniversitesi',
+    description: 'Tasarım teorisi ve uygulama konusunda kapsamlı eğitim aldım.'
+  },
+  {
+    date: '2012 - 2016',
+    degree: 'Lise Diploması',
+    institution: 'Samsun Anadolu Lisesi',
+    description: 'Akademik temelleri oluşturduğum dönem.'
+  }
+];
+
+// Portfolio items - Add your actual images here
+const portfolioItems = [
+  { image: '/img/portfolio/dress1.jpg', category: 'elbise', title: 'Elbise Tasarımı 1', description: 'Modern çizgiler' },
+  { image: '/img/portfolio/dress2.jpg', category: 'elbise', title: 'Elbise Tasarımı 2', description: 'Zarif detaylar' },
+  { image: '/img/portfolio/bag1.jpg', category: 'canta', title: 'Çanta Tasarımı 1', description: 'Minimal ve şık' },
+  { image: '/img/portfolio/bag2.jpg', category: 'canta', title: 'Çanta Tasarımı 2', description: 'Cesur renkler' },
+  { image: '/img/portfolio/coat1.jpg', category: 'kaban', title: 'Kaban Tasarımı 1', description: 'Kış koleksiyonu' },
+  { image: '/img/portfolio/coat2.jpg', category: 'kaban', title: 'Kaban Tasarımı 2', description: 'Klasik kesim' },
+  { image: '/img/portfolio/acc1.jpg', category: 'aksesuar', title: 'Aksesuar 1', description: 'Detay tasarımı' },
+  { image: '/img/portfolio/acc2.jpg', category: 'aksesuar', title: 'Aksesuar 2', description: 'Özel parçalar' },
+];
+
+// Portfolio filters
+const portfolioFilters = [
+  { name: 'elbise', label: 'Elbiseler' },
+  { name: 'canta', label: 'Çantalar' },
+  { name: 'kaban', label: 'Kabanlar' },
+  { name: 'aksesuar', label: 'Aksesuarlar' },
+];
+
+// Videos - Add your actual videos here
+const videos = [
+  { src: '/video/video1.mp4', title: 'Koleksiyon Tanıtımı 1', orientation: 'vertical' },
+  { src: '/video/video2.mp4', title: 'Tasarım Süreci', orientation: 'horizontal' },
+  { src: '/video/video3.mp4', title: 'Defile Görüntüleri', orientation: 'vertical' },
+  { src: '/video/video4.mp4', title: 'Atölye Çalışmaları', orientation: 'horizontal' },
+];
+---
+
+<Layout title="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
+  <Hero 
+    name="ELİF DİKMEN"
+    title="Tasarımın Yenilikçi Mimarı"
+    instagram="https://instagram.com/yourusername"
+    linkedin="https://linkedin.com/in/yourusername"
+  />
+  
+  <About 
+    title="ELİF DİKMEN - Tasarımın Yenilikçi Mimarı"
+    description="Moda endüstrisinde 2016 yılından bu yana, sadece tasarlamıyor: Çalıştığım markaların gelecekteki başarı harikasını çiziyorum. Kendi markamın disiplini ve sektörün devleriyle edindiğim tecrübeyle. Her zaman tek bir sonuca odaklandım: Pazar liderliği. Misyonum: Alışılmış kalıpları yıkan bir vizyonla koleksiyonlara marjinal yenilikçi ve %100 özel bir ruh katmaktır. Bu tutku ve özen, çalıştığım her firmanın rekabette kesinlikle on adım önde konumlanmasını sağlamıştır. Benim imzamı taşıyan her parça, markanın mevcut çizgisini değil, sektördeki konumunu yeniden tanımlar. Markanızın potansiyeline erişmesi için hazırda bekleyen, konseptinize mükemmel uyum sağlayacak, oyun değiştirici özel tasarım seçkilerim mevcut. Hazır giyimdeki bu radikal dönüşümün bir sonraki durağı, markanızın vitrinleridir. Sadece bir görüşme değil, markanızın en başarılı koleksiyon döngüsünü başlatacak stratejik bir ortaklık için hazırım. Birlikte çalışmaya başladığımızda, çizgiyi nereye taşıyacağımızı değil, neleri geride bırakacağımızı konuşacağız."
+    birthDate="29.03.2002"
+    birthPlace="Samsun"
+    phone="0537 617 45 38"
+    email="eelif1453dikmen@gmail.com"
+    website="elifdikmen.com"
+    city="İstanbul, Türkiye"
+    age="23"
+    imagePath="/img/self/portrait.jpg"
+  />
+  
+  <Resume 
+    experiences={experiences}
+    education={education}
+  />
+  
+  <Portfolio 
+    items={portfolioItems}
+    filters={portfolioFilters}
+  />
+  
+  <VideoGallery videos={videos} />
+</Layout>
