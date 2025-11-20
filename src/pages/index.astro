@@ -46,39 +46,20 @@ const education = [
 ];
 
 // Portfolio items - Add your actual images here
-const portfolioItems = [
-  { image: '/img/portfolio/dress1.jpg', category: 'elbise', title: 'Elbise Tasarımı 1', description: 'Modern çizgiler' },
-  { image: '/img/portfolio/dress2.jpg', category: 'elbise', title: 'Elbise Tasarımı 2', description: 'Zarif detaylar' },
-  { image: '/img/portfolio/bag1.jpg', category: 'canta', title: 'Çanta Tasarımı 1', description: 'Minimal ve şık' },
-  { image: '/img/portfolio/bag2.jpg', category: 'canta', title: 'Çanta Tasarımı 2', description: 'Cesur renkler' },
-  { image: '/img/portfolio/coat1.jpg', category: 'kaban', title: 'Kaban Tasarımı 1', description: 'Kış koleksiyonu' },
-  { image: '/img/portfolio/coat2.jpg', category: 'kaban', title: 'Kaban Tasarımı 2', description: 'Klasik kesim' },
-  { image: '/img/portfolio/acc1.jpg', category: 'aksesuar', title: 'Aksesuar 1', description: 'Detay tasarımı' },
-  { image: '/img/portfolio/acc2.jpg', category: 'aksesuar', title: 'Aksesuar 2', description: 'Özel parçalar' },
-];
+import { portfolioItems } from './data/portfolios.js';
 
 // Portfolio filters
-const portfolioFilters = [
-  { name: 'elbise', label: 'Elbiseler' },
-  { name: 'canta', label: 'Çantalar' },
-  { name: 'kaban', label: 'Kabanlar' },
-  { name: 'aksesuar', label: 'Aksesuarlar' },
-];
+import { portfolioFilters } from './data/portfolioFilters.js'
 
 // Videos - Add your actual videos here
-const videos = [
-  { src: '/video/video1.mp4', title: 'Koleksiyon Tanıtımı 1', orientation: 'vertical' },
-  { src: '/video/video2.mp4', title: 'Tasarım Süreci', orientation: 'horizontal' },
-  { src: '/video/video3.mp4', title: 'Defile Görüntüleri', orientation: 'vertical' },
-  { src: '/video/video4.mp4', title: 'Atölye Çalışmaları', orientation: 'horizontal' },
-];
+import { videos } from './data/videos';
 ---
 
 <Layout title="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
   <Hero 
     name="ELİF DİKMEN"
     title="Tasarımın Yenilikçi Mimarı"
-    instagram="https://instagram.com/yourusername"
+    instagram="https://www.instagram.com/e_elif_dkmn.61/"
     linkedin="https://linkedin.com/in/yourusername"
   />
   

@@ -1,10 +1,13 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 
 export default defineConfig({
   // Tailwind CSS integration
-  integrations: [tailwind()],
+  integrations: [tailwind(), 
+    react(),
+  ],
   
   // Your site URL
   site: 'https://elifdikmen.com',
@@ -25,4 +28,5 @@ export default defineConfig({
   build: {
     assets: 'assets'
   }
+  
 });
