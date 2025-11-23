@@ -1,7 +1,8 @@
-->Hero kisminda İ nin noktasi gorunmuyo
-->Sosyal medya sembolleri buyult
-->Genel arka plani duzelt
-->Portfolyodaki fotograflar tiklandiginda buyultulecek
-->Portfolyoda gradyani duzenle (Beyaz renk olabilir)
-->Arada surekli oynayan bir video (Deneyim yerine)
-->Basliklarin fontunu degistir (Herodaki font gibi yap)
+->Hero kisminda İ nin noktasi gorunmuyo x
+->Sosyal medya sembolleri buyult x
+->Genel arka plani duzelt 
+->Portfolyodaki fotograflar tiklandiginda buyultulecek 
+->Portfolyoda gradyani duzenle (Beyaz renk olabilir) 
+->Resimleri videolari ekle 
+->Arada surekli oynayan bir video (Deneyim yerine) x
+->Basliklarin fontunu degistir (Herodaki font gibi yap) x

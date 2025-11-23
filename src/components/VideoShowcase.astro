@@ -7,41 +7,36 @@ const {
 // videos should be array of { src, title? }
 ---
 
-<section class="bg-white py-28 px-4 sm:px-8 relative overflow-hidden">
+<section class="bg-white relative overflow-hidden">
   <!-- Background decoration -->
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(102,126,234,0.05)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(240,147,251,0.05)_0%,transparent_50%)] pointer-events-none"></div>
   
   {title && (
-    <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-center text-gray-800 mb-16 relative inline-block left-1/2 -translate-x-1/2">
+    <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-center text-gray-800 py-16 relative inline-block left-1/2 -translate-x-1/2">
       {title}
       <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-36 h-1.5 bg-gradient-to-r from-purple-500 to-purple-700 rounded-full"></div>
     </h2>
   )}
   
-  <div class="max-w-6xl mx-auto relative z-10">
-    <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
+  <div class="w-full relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
       {videos.map((video) => (
-        <div class="w-full md:w-[70%] relative">
-          <div class="rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] relative group">
-            <!-- Top accent -->
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-purple-700 to-pink-400 z-10"></div>
-            
-            <video 
-              autoplay 
-              muted 
-              loop 
-              playsinline
-              class="w-full h-auto object-cover"
-            >
-              <source src={video.src} type="video/mp4" />
-            </video>
-            
-            {video.title && (
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
-                <h3 class="text-white text-lg font-semibold">{video.title}</h3>
-              </div>
-            )}
-          </div>
+        <div class="relative aspect-video">
+          <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            class="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={video.src} type="video/mp4" />
+          </video>
+          
+          {video.title && (
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12 z-20">
+              <h3 class="text-white text-lg font-semibold">{video.title}</h3>
+            </div>
+          )}
         </div>
       ))}
     </div>
