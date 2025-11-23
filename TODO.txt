@@ -1,8 +1,4 @@
-->Hero kisminda İ nin noktasi gorunmuyo x
-->Sosyal medya sembolleri buyult x
-->Genel arka plani duzelt 
-->Portfolyodaki fotograflar tiklandiginda buyultulecek 
-->Portfolyoda gradyani duzenle (Beyaz renk olabilir) 
+->Sosyal medya sembolleri buyult
+->Portfolyodaki fotograflar tiklandiginda buyultulecek - Buyultmede sorun var 
 ->Resimleri videolari ekle 
-->Arada surekli oynayan bir video (Deneyim yerine) x
-->Basliklarin fontunu degistir (Herodaki font gibi yap) x
+->Turkce / Ingilizce 

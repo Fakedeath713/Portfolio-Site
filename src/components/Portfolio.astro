@@ -3,11 +3,11 @@
 const { items = [], filters = [] } = Astro.props;
 ---
 
-<section class="min-h-screen bg-gradient-to-b from-gray-200 to-gray-50 py-28 px-4 sm:px-8">
+<section class="min-h-screen bg-white/25 backdrop-blur-[2px] py-28 px-4 sm:px-8">
   <div class="max-w-[1600px] mx-auto">
     <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-center text-gray-800 mb-16 relative inline-block left-1/2 -translate-x-1/2">
       Portfolio
-      <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-36 h-1.5 bg-gradient-to-r from-purple-500 to-purple-700 rounded-full"></div>
+      <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-36 h-1.5 bg-gradient-to-r from-black to-gray rounded-full"></div>
     </h2>
     
     <!-- Filters -->
@@ -34,6 +34,9 @@ const { items = [], filters = [] } = Astro.props;
         <div 
           class="portfolio-item opacity-0 scale-90"
           data-category={item.category}
+          data-image={item.image}
+          data-title={item.title}
+          data-description={item.description}
           style={`animation-delay: ${(index % 12) * 0.05}s;`}
         >
           <div class="group relative rounded-3xl overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] transition-all duration-400 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer">
@@ -45,11 +48,11 @@ const { items = [], filters = [] } = Astro.props;
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
               />
               
-              <!-- Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-purple-600/95 via-purple-700/85 to-transparent flex items-end p-8 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+              <!-- Overlay - Much lighter and shorter -->
+              <div class="absolute inset-0 bg-gradient-to-t from-white/95 via-transparent to-transparent flex items-end p-8 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
                 <div class="transform translate-y-5 transition-transform duration-400 group-hover:translate-y-0">
-                  <h3 class="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                  {item.description && <p class="text-sm text-white/90 leading-relaxed">{item.description}</p>}
+                  <h3 class="text-2xl font-bold text-gray-800 mb-2">{item.title}</h3>
+                  {item.description && <p class="text-sm text-gray-600 leading-relaxed">{item.description}</p>}
                 </div>
               </div>
             </div>
@@ -58,13 +61,47 @@ const { items = [], filters = [] } = Astro.props;
       ))}
     </div>
   </div>
+  
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
+    <button id="closeLightbox" class="absolute top-4 right-4 text-white text-4xl font-light hover:text-purple-400 transition-colors z-10 w-12 h-12 flex items-center justify-center">
+      ×
+    </button>
+    
+    <button id="prevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-10 w-16 h-16 flex items-center justify-center">
+      ‹
+    </button>
+    
+    <button id="nextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-10 w-16 h-16 flex items-center justify-center">
+      ›
+    </button>
+    
+    <div class="max-w-7xl max-h-[90vh] w-full flex flex-col items-center">
+      <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
+      <div class="mt-6 text-center">
+        <h3 id="lightboxTitle" class="font-title text-3xl font-bold text-white mb-2"></h3>
+        <p id="lightboxDescription" class="text-lg text-white/80"></p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxDescription = document.getElementById('lightboxDescription');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const prevImage = document.getElementById('prevImage');
+    const nextImage = document.getElementById('nextImage');
     
+    let currentItems = [];
+    let currentIndex = 0;
+    
+    // Filter functionality
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
@@ -89,12 +126,95 @@ const { items = [], filters = [] } = Astro.props;
             }, 300);
           }
         });
+        
+        updateCurrentItems();
       });
     });
     
     // Initialize all items as visible
     portfolioItems.forEach(item => {
       item.classList.add('show');
+    });
+    
+    // Update current visible items
+    function updateCurrentItems() {
+      currentItems = Array.from(portfolioItems).filter(item => 
+        item.style.display !== 'none'
+      );
+    }
+    
+    updateCurrentItems();
+    
+    // Open lightbox on portfolio item click
+    portfolioItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        const image = item.getAttribute('data-image');
+        const title = item.getAttribute('data-title');
+        const description = item.getAttribute('data-description');
+        
+        lightboxImage.src = image;
+        lightboxTitle.textContent = title;
+        lightboxDescription.textContent = description || '';
+        
+        currentIndex = currentItems.indexOf(item);
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    // Close lightbox
+    function closeLightboxFunc() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    
+    closeLightbox.addEventListener('click', closeLightboxFunc);
+    
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightboxFunc();
+      }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+        closeLightboxFunc();
+      }
+    });
+    
+    // Previous image
+    prevImage.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
+      const item = currentItems[currentIndex];
+      lightboxImage.src = item.getAttribute('data-image');
+      lightboxTitle.textContent = item.getAttribute('data-title');
+      lightboxDescription.textContent = item.getAttribute('data-description') || '';
+    });
+    
+    // Next image
+    nextImage.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % currentItems.length;
+      const item = currentItems[currentIndex];
+      lightboxImage.src = item.getAttribute('data-image');
+      lightboxTitle.textContent = item.getAttribute('data-title');
+      lightboxDescription.textContent = item.getAttribute('data-description') || '';
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft') {
+          prevImage.click();
+        } else if (e.key === 'ArrowRight') {
+          nextImage.click();
+        }
+      }
     });
   });
 </script>

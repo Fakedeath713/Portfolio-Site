@@ -17,7 +17,10 @@ const { title } = Astro.props;
   <!-- Title font - Merriweather -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
 </head>
-<body class="font-sans antialiased text-gray-800 bg-white overflow-x-hidden">
+<body class="font-sans antialiased text-gray-800 overflow-x-hidden relative">
+  <!-- Background Image -->
+  <div class="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('/images/self/background_style_turned.png');"></div>
+  
   <slot />
 </body>
 </html>

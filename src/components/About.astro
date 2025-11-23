@@ -14,7 +14,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="min-h-screen bg-[#606369] py-24 px-4 sm:px-8 relative overflow-hidden">
+<section class="min-h-screen bg-white/25 backdrop-blur-[2px] py-24 px-4 sm:px-8 relative overflow-hidden">
   <!-- Floating decoration -->
   <div class="absolute -top-1/2 -right-[10%] w-[600px] h-[600px] rounded-full bg-gradient-radial from-purple-500/10 to-transparent animate-float"></div>
   
@@ -23,18 +23,16 @@ const {
       
       <!-- Text Content -->
       <div class="p-8">
-        <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-8 leading-tight relative inline-block">
+        <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-black mb-8 leading-tight relative inline-block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
           {title}
-          <div class="absolute -bottom-2 left-0 w-24 h-1.5 bg-gradient-to-r from-purple-300 to-purple-500 rounded-full"></div>
+          <div class="absolute -bottom-2 left-0 w-24 h-1.5 bg-gradient-to-r from-black to-gray rounded-full"></div>
         </h2>
         
-        <p class=" text-lg leading-relaxed text-gray-200 mb-12 text-justify">
+        <p class="text-lg leading-relaxed text-black mb-12 text-justify">
           {description}
         </p>
         
         <!-- Details Card -->
-        <div class="bg-white rounded-3xl p-10 shadow-[0_20px_60px_rgba(0,0,0,0.1)] relative overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-purple-700 to-pink-400"></div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
@@ -66,7 +64,6 @@ const {
               <span class="text-base font-medium text-gray-800">{age}</span>
             </div>
           </div>
-        </div>
       </div>
       
       <!-- Image -->
