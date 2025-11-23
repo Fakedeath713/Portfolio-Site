@@ -36,7 +36,6 @@ const { items = [], filters = [] } = Astro.props;
           data-category={item.category}
           data-image={item.image}
           data-title={item.title}
-          data-description={item.description}
           style={`animation-delay: ${(index % 12) * 0.05}s;`}
         >
           <div class="group relative rounded-3xl overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] transition-all duration-400 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer">
@@ -48,11 +47,10 @@ const { items = [], filters = [] } = Astro.props;
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
               />
               
-              <!-- Overlay - Much lighter and shorter -->
+              <!-- Overlay -->
               <div class="absolute inset-0 bg-gradient-to-t from-white/95 via-transparent to-transparent flex items-end p-8 opacity-0 transition-opacity duration-400 group-hover:opacity-100">
                 <div class="transform translate-y-5 transition-transform duration-400 group-hover:translate-y-0">
-                  <h3 class="text-2xl font-bold text-gray-800 mb-2">{item.title}</h3>
-                  {item.description && <p class="text-sm text-gray-600 leading-relaxed">{item.description}</p>}
+                  <h3 class="text-2xl font-bold text-gray-800">{item.title}</h3>
                 </div>
               </div>
             </div>
@@ -61,30 +59,29 @@ const { items = [], filters = [] } = Astro.props;
       ))}
     </div>
   </div>
+</section>
+
+<!-- Lightbox Modal - Outside the section -->
+<div id="lightbox" class="fixed inset-0 bg-black/90 z-[9999] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+  <button id="closeLightbox" class="fixed top-4 right-4 text-white text-4xl font-light hover:text-purple-400 transition-colors z-[10000] w-12 h-12 flex items-center justify-center">
+    ×
+  </button>
   
-  <!-- Lightbox Modal -->
-  <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
-    <button id="closeLightbox" class="absolute top-4 right-4 text-white text-4xl font-light hover:text-purple-400 transition-colors z-10 w-12 h-12 flex items-center justify-center">
-      ×
-    </button>
-    
-    <button id="prevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-10 w-16 h-16 flex items-center justify-center">
-      ‹
-    </button>
-    
-    <button id="nextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-10 w-16 h-16 flex items-center justify-center">
-      ›
-    </button>
-    
-    <div class="max-w-7xl max-h-[90vh] w-full flex flex-col items-center">
-      <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
-      <div class="mt-6 text-center">
-        <h3 id="lightboxTitle" class="font-title text-3xl font-bold text-white mb-2"></h3>
-        <p id="lightboxDescription" class="text-lg text-white/80"></p>
-      </div>
+  <button id="prevImage" class="fixed left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
+    ‹
+  </button>
+  
+  <button id="nextImage" class="fixed right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
+    ›
+  </button>
+  
+  <div class="max-w-7xl w-full flex flex-col items-center justify-center">
+    <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
+    <div class="mt-6 text-center">
+      <h3 id="lightboxTitle" class="font-title text-3xl font-bold text-white"></h3>
     </div>
   </div>
-</section>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -93,13 +90,13 @@ const { items = [], filters = [] } = Astro.props;
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxTitle = document.getElementById('lightboxTitle');
-    const lightboxDescription = document.getElementById('lightboxDescription');
     const closeLightbox = document.getElementById('closeLightbox');
     const prevImage = document.getElementById('prevImage');
     const nextImage = document.getElementById('nextImage');
     
     let currentItems = [];
     let currentIndex = 0;
+    let scrollPosition = 0;
     
     // Filter functionality
     filterBtns.forEach(btn => {
@@ -150,24 +147,40 @@ const { items = [], filters = [] } = Astro.props;
       item.addEventListener('click', () => {
         const image = item.getAttribute('data-image');
         const title = item.getAttribute('data-title');
-        const description = item.getAttribute('data-description');
+        
+        // Store current scroll position
+        scrollPosition = window.scrollY;
         
         lightboxImage.src = image;
         lightboxTitle.textContent = title;
-        lightboxDescription.textContent = description || '';
         
         currentIndex = currentItems.indexOf(item);
+        
+        // Show lightbox with flex display
+        lightbox.style.display = 'flex';
         lightbox.classList.remove('hidden');
-        lightbox.classList.add('flex');
+        
+        // Prevent body scroll and maintain position
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
       });
     });
     
     // Close lightbox
     function closeLightboxFunc() {
+      lightbox.style.display = 'none';
       lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
+      
+      // Restore body styles
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
+      
+      // Restore scroll position instantly
+      window.scrollTo(0, scrollPosition);
     }
     
     closeLightbox.addEventListener('click', closeLightboxFunc);
@@ -193,7 +206,6 @@ const { items = [], filters = [] } = Astro.props;
       const item = currentItems[currentIndex];
       lightboxImage.src = item.getAttribute('data-image');
       lightboxTitle.textContent = item.getAttribute('data-title');
-      lightboxDescription.textContent = item.getAttribute('data-description') || '';
     });
     
     // Next image
@@ -203,7 +215,6 @@ const { items = [], filters = [] } = Astro.props;
       const item = currentItems[currentIndex];
       lightboxImage.src = item.getAttribute('data-image');
       lightboxTitle.textContent = item.getAttribute('data-title');
-      lightboxDescription.textContent = item.getAttribute('data-description') || '';
     });
     
     // Keyboard navigation

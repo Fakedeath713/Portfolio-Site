@@ -28,13 +28,8 @@ import { SiInstagram, SiLinkedin } from "react-icons/si";
     <!-- Social Links -->
     <div class="flex gap-8 justify-center mt-12">
       {instagram && (
-        <a href={instagram} target="_blank" rel="noopener noreferrer">
-          <SiInstagram client:load class="w-6 h-6 hover:text-pink-500 transition-colors" />
-        </a>
-      )}
-      {linkedin && (
-        <a href={linkedin} target="_blank" rel="noopener noreferrer">
-          <SiLinkedin client:load class="w-6 h-6 hover:text-blue-700 transition-colors" />
+        <a href={instagram} target="_blank" rel="noopener noreferrer" class="transform hover:scale-110 transition-transform">
+          <SiInstagram client:load className="w-12 h-12 hover:text-pink-500 transition-colors" />
         </a>
       )}
     </div>
