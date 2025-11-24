@@ -6,7 +6,7 @@ const { items = [], filters = [] } = Astro.props;
 <section class="min-h-screen bg-white/25 backdrop-blur-[2px] py-28 px-4 sm:px-8">
   <div class="max-w-[1600px] mx-auto">
     <h2 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-center text-gray-800 mb-16 relative inline-block left-1/2 -translate-x-1/2">
-      Portfolyo
+      Portfolio
       <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-36 h-1.5 bg-gradient-to-r from-black to-gray rounded-full"></div>
     </h2>
     
@@ -16,7 +16,7 @@ const { items = [], filters = [] } = Astro.props;
         class="filter-btn px-8 py-3 border-2 border-gray-300 bg-white text-gray-600 text-base font-semibold rounded-full cursor-pointer transition-all duration-300 uppercase tracking-wide hover:border-purple-500 hover:text-purple-600 hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(102,126,234,0.2)] active" 
         data-filter="all"
       >
-        Tümü
+        All
       </button>
       {filters.map(filter => (
         <button 
@@ -61,42 +61,10 @@ const { items = [], filters = [] } = Astro.props;
   </div>
 </section>
 
-<!-- Lightbox Modal - Outside the section -->
-<div id="lightbox" class="fixed inset-0 bg-black/90 z-[9999] hidden flex items-center justify-center p-4 backdrop-blur-sm">
-  <button id="closeLightbox" class="fixed top-4 right-4 text-white text-4xl font-light hover:text-purple-400 transition-colors z-[10000] w-12 h-12 flex items-center justify-center">
-    ×
-  </button>
-  
-  <button id="prevImage" class="fixed left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
-    ‹
-  </button>
-  
-  <button id="nextImage" class="fixed right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
-    ›
-  </button>
-  
-  <div class="max-w-7xl w-full flex flex-col items-center justify-center">
-    <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
-    <div class="mt-6 text-center">
-      <h3 id="lightboxTitle" class="font-title text-3xl font-bold text-white"></h3>
-    </div>
-  </div>
-</div>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxTitle = document.getElementById('lightboxTitle');
-    const closeLightbox = document.getElementById('closeLightbox');
-    const prevImage = document.getElementById('prevImage');
-    const nextImage = document.getElementById('nextImage');
-    
-    let currentItems = [];
-    let currentIndex = 0;
-    let scrollPosition = 0;
     
     // Filter functionality
     filterBtns.forEach(btn => {
@@ -123,8 +91,6 @@ const { items = [], filters = [] } = Astro.props;
             }, 300);
           }
         });
-        
-        updateCurrentItems();
       });
     });
     
@@ -133,99 +99,30 @@ const { items = [], filters = [] } = Astro.props;
       item.classList.add('show');
     });
     
-    // Update current visible items
-    function updateCurrentItems() {
-      currentItems = Array.from(portfolioItems).filter(item => 
-        item.style.display !== 'none'
-      );
-    }
-    
-    updateCurrentItems();
-    
     // Open lightbox on portfolio item click
-    portfolioItems.forEach((item, index) => {
+    portfolioItems.forEach((item) => {
       item.addEventListener('click', () => {
-        const image = item.getAttribute('data-image');
-        const title = item.getAttribute('data-title');
+        // Get ONLY currently visible items at the moment of click
+        const currentVisibleItems = Array.from(portfolioItems).filter(el => 
+          el.style.display !== 'none' && window.getComputedStyle(el).display !== 'none'
+        );
         
-        // Store current scroll position
-        scrollPosition = window.scrollY;
+        const clickedIndex = currentVisibleItems.indexOf(item);
         
-        lightboxImage.src = image;
-        lightboxTitle.textContent = title;
+        // Prepare items array for lightbox
+        const itemsForLightbox = currentVisibleItems.map(el => ({
+          image: el.getAttribute('data-image'),
+          title: el.getAttribute('data-title')
+        }));
         
-        currentIndex = currentItems.indexOf(item);
-        
-        // Show lightbox with flex display
-        lightbox.style.display = 'flex';
-        lightbox.classList.remove('hidden');
-        
-        // Prevent body scroll and maintain position
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollPosition}px`;
-        document.body.style.width = '100%';
-        document.body.style.overflow = 'hidden';
+        // Dispatch custom event to open global lightbox
+        document.dispatchEvent(new CustomEvent('openLightbox', {
+          detail: {
+            items: itemsForLightbox,
+            index: clickedIndex
+          }
+        }));
       });
-    });
-    
-    // Close lightbox
-    function closeLightboxFunc() {
-      lightbox.style.display = 'none';
-      lightbox.classList.add('hidden');
-      
-      // Restore body styles
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      
-      // Restore scroll position instantly
-      window.scrollTo(0, scrollPosition);
-    }
-    
-    closeLightbox.addEventListener('click', closeLightboxFunc);
-    
-    // Close on background click
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightboxFunc();
-      }
-    });
-    
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
-        closeLightboxFunc();
-      }
-    });
-    
-    // Previous image
-    prevImage.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
-      const item = currentItems[currentIndex];
-      lightboxImage.src = item.getAttribute('data-image');
-      lightboxTitle.textContent = item.getAttribute('data-title');
-    });
-    
-    // Next image
-    nextImage.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % currentItems.length;
-      const item = currentItems[currentIndex];
-      lightboxImage.src = item.getAttribute('data-image');
-      lightboxTitle.textContent = item.getAttribute('data-title');
-    });
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('hidden')) {
-        if (e.key === 'ArrowLeft') {
-          prevImage.click();
-        } else if (e.key === 'ArrowRight') {
-          nextImage.click();
-        }
-      }
     });
   });
 </script>

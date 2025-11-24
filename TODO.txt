@@ -1,4 +1,3 @@
-->Sosyal medya sembolleri buyult  x
-->Portfolyodaki fotograflar tiklandiginda buyultulecek - Buyultmede sorun var  x
-->Resimleri videolari ekle  x
-->Turkce / Ingilizce 
+->Turkce / Ingilizce  x
+->About/a defileden videolari ekle x
+->Sorunu coz x

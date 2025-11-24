@@ -6,33 +6,38 @@ import About from '../components/About.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
 import Portfolio from '../components/Portfolio.astro';
 import VideoGallery from '../components/VideoGallery.astro';
+import Gallery from '../components/Gallery.astro';
+import GlobalLightbox from '../components/GlobalLightbox.astro';
 
 
 // Portfolio items - Add your actual images here
-import { portfolioItems } from './data/portfolios.js';
+import { portfolioItems } from '../../data/portfolios.js';
 
 // Portfolio filters
-import { portfolioFilters } from './data/portfolioFilters.js'
-
+import { portfolioFilters } from '../../data/portfolioFilters.js'
+  
 // Videos - Add your actual videos here
-import { videos } from './data/videos';
+import { videos } from '../../data/videos';
 
 // Video Showcase
-import { showcaseVideos } from './data/showcase'
+import { showcaseVideos } from '../../data/showcase'
+
+// Fashion Show Gallery
+import {galleryItems} from '../../data/gallery'
 ---
 
 
-<Layout title="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
+<Layout title="Elif Dikmen - INNOVATIVE ARCHITECH OF DESIGN">
   <Hero 
     name="ELİF DİKMEN"
-    title="Tasarımın Yenilikçi Mimarı"
+    title="INNOVATIVE ARCHITECH OF DESIGN"
     instagram="https://www.instagram.com/e_elif_dkmn.61/"
     linkedin="https://linkedin.com/in/yourusername"
   />
   
   <About 
-    title="ELİF DİKMEN - Tasarımın Yenilikçi Mimarı"
-    description="Moda endüstrisinde 2016 yılından bu yana, sadece tasarlamıyor: Çalıştığım markaların gelecekteki başarı harikasını çiziyorum. Kendi markamın disiplini ve sektörün devleriyle edindiğim tecrübeyle. Her zaman tek bir sonuca odaklandım: Pazar liderliği. Misyonum: Alışılmış kalıpları yıkan bir vizyonla koleksiyonlara marjinal yenilikçi ve %100 özel bir ruh katmaktır. Bu tutku ve özen, çalıştığım her firmanın rekabette kesinlikle on adım önde konumlanmasını sağlamıştır. Benim imzamı taşıyan her parça, markanın mevcut çizgisini değil, sektördeki konumunu yeniden tanımlar. Markanızın potansiyeline erişmesi için hazırda bekleyen, konseptinize mükemmel uyum sağlayacak, oyun değiştirici özel tasarım seçkilerim mevcut. Hazır giyimdeki bu radikal dönüşümün bir sonraki durağı, markanızın vitrinleridir. Sadece bir görüşme değil, markanızın en başarılı koleksiyon döngüsünü başlatacak stratejik bir ortaklık için hazırım. Birlikte çalışmaya başladığımızda, çizgiyi nereye taşıyacağımızı değil, neleri geride bırakacağımızı konuşacağız."
+    title="ELİF DİKMEN - Innovative Architect of Design"
+    description="In the fashion industry since 2016, I don't just design: I chart the future success story of the brands I work with. With the discipline of my own brand and experience gained from industry giants. I've always focused on one outcome: Market leadership. My mission: To infuse collections with a marginally innovative and 100% unique spirit through a vision that breaks conventional molds. This passion and dedication has ensured that every company I work with is positioned ten steps ahead in the competition. Each piece bearing my signature doesn't redefine the brand's current line, but its position in the industry. I have game-changing exclusive design selections ready and waiting to reach your brand's potential, perfectly fitting your concept. The next stop of this radical transformation in ready-to-wear is your brand's showcases. I'm ready not just for a meeting, but for a strategic partnership that will launch your brand's most successful collection cycle. When we start working together, we won't discuss where to take the line, but what we'll leave behind."
     birthDate="29.03.2002"
     birthPlace="Samsun"
     phone="0537 617 45 38"
@@ -41,6 +46,10 @@ import { showcaseVideos } from './data/showcase'
     city="İstanbul, Türkiye"
     age="23"
     imagePath="/img/self/portrait.jpg"
+  />
+
+  <Gallery
+    items={galleryItems}
   />
   
   <VideoShowcase 
@@ -54,4 +63,5 @@ import { showcaseVideos } from './data/showcase'
   />
   
   <VideoGallery videos={videos} />
+  <GlobalLightbox />
 </Layout>

@@ -1,7 +1,7 @@
 // src/data/portfolioFilters.js
 
 export const portfolioFilters = [
-  { name: 'elbise', label: 'Giyim' },
-  { name: 'canta', label: 'Çantalar' },
-  { name: 'ayakkabi', label: 'Ayakkabılar' },
+  { name: 'elbise', label: 'Dresses' },
+  { name: 'canta', label: 'Bags' },
+  { name: 'ayakkabi', label: 'Shoes' },
 ];

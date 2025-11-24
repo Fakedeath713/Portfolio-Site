@@ -1,0 +1,118 @@
+<div id="lightbox" class="fixed inset-0 bg-black/90 z-[9999] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+  <button id="closeLightbox" class="fixed top-4 right-4 text-white text-4xl font-light hover:text-purple-400 transition-colors z-[10000] w-12 h-12 flex items-center justify-center">
+    ×
+  </button>
+  
+  <button id="prevImage" class="fixed left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
+    ‹
+  </button>
+  
+  <button id="nextImage" class="fixed right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-light hover:text-purple-400 transition-colors z-[10000] w-16 h-16 flex items-center justify-center">
+    ›
+  </button>
+  
+  <div class="max-w-7xl w-full flex flex-col items-center justify-center">
+    <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
+    <div class="mt-6 text-center">
+      <h3 id="lightboxTitle" class="font-title text-3xl font-bold text-white"></h3>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Global state for the single lightbox instance
+  let currentItems = [];
+  let currentIndex = 0;
+  let scrollPosition = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const closeLightbox = document.getElementById('closeLightbox');
+  const prevImage = document.getElementById('prevImage');
+  const nextImage = document.getElementById('nextImage');
+
+  function updateLightboxContent(item) {
+    lightboxImage.src = item.image;
+    lightboxTitle.textContent = item.title;
+  }
+
+  function closeLightboxFunc() {
+    lightbox.style.display = 'none';
+    lightbox.classList.add('hidden');
+
+    // Restore body styles
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    
+    // Restore scroll position instantly
+    window.scrollTo(0, scrollPosition);
+  }
+
+  // Handle custom event from any Gallery/Portfolio component
+  document.addEventListener('openLightbox', (e) => {
+    scrollPosition = window.scrollY;
+
+    // Get the scoped item list and clicked index from the event detail
+    currentItems = e.detail.items;
+    currentIndex = e.detail.index;
+
+    updateLightboxContent(currentItems[currentIndex]);
+
+    // Show lightbox
+    lightbox.style.display = 'flex';
+    lightbox.classList.remove('hidden');
+
+    // Prevent body scroll and maintain position
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  });
+
+  // --- Lightbox Controls ---
+
+  // Close handlers
+  closeLightbox.addEventListener('click', closeLightboxFunc);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightboxFunc();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+      closeLightboxFunc();
+    }
+  });
+
+  // Previous image
+  prevImage.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentItems.length > 0) {
+      currentIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
+      updateLightboxContent(currentItems[currentIndex]);
+    }
+  });
+
+  // Next image
+  nextImage.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentItems.length > 0) {
+      currentIndex = (currentIndex + 1) % currentItems.length;
+      updateLightboxContent(currentItems[currentIndex]);
+    }
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('hidden')) {
+      if (e.key === 'ArrowLeft') {
+        prevImage.click();
+      } else if (e.key === 'ArrowRight') {
+        nextImage.click();
+      }
+    }
+  });
+</script>
