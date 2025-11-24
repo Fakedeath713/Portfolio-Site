@@ -6,6 +6,7 @@ import About from '../components/About.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
 import Portfolio from '../components/Portfolio.astro';
 import VideoGallery from '../components/VideoGallery.astro';
+import { t } from 'astro-i18n';
 
 
 // Portfolio items - Add your actual images here
@@ -22,24 +23,24 @@ import { showcaseVideos } from './data/showcase'
 ---
 
 
-<Layout title="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
+<Layout title={t('site.title')}>
   <Hero 
-    name="ELİF DİKMEN"
-    title="Tasarımın Yenilikçi Mimarı"
+    name={t('hero.name')}
+    title={t('hero.title')}
     instagram="https://www.instagram.com/e_elif_dkmn.61/"
     linkedin="https://linkedin.com/in/yourusername"
   />
   
   <About 
-    title="ELİF DİKMEN - Tasarımın Yenilikçi Mimarı"
-    description="Moda endüstrisinde 2016 yılından bu yana, sadece tasarlamıyor: Çalıştığım markaların gelecekteki başarı harikasını çiziyorum. Kendi markamın disiplini ve sektörün devleriyle edindiğim tecrübeyle. Her zaman tek bir sonuca odaklandım: Pazar liderliği. Misyonum: Alışılmış kalıpları yıkan bir vizyonla koleksiyonlara marjinal yenilikçi ve %100 özel bir ruh katmaktır. Bu tutku ve özen, çalıştığım her firmanın rekabette kesinlikle on adım önde konumlanmasını sağlamıştır. Benim imzamı taşıyan her parça, markanın mevcut çizgisini değil, sektördeki konumunu yeniden tanımlar. Markanızın potansiyeline erişmesi için hazırda bekleyen, konseptinize mükemmel uyum sağlayacak, oyun değiştirici özel tasarım seçkilerim mevcut. Hazır giyimdeki bu radikal dönüşümün bir sonraki durağı, markanızın vitrinleridir. Sadece bir görüşme değil, markanızın en başarılı koleksiyon döngüsünü başlatacak stratejik bir ortaklık için hazırım. Birlikte çalışmaya başladığımızda, çizgiyi nereye taşıyacağımızı değil, neleri geride bırakacağımızı konuşacağız."
-    birthDate="29.03.2002"
-    birthPlace="Samsun"
-    phone="0537 617 45 38"
-    email="eelif1453dikmen@gmail.com"
-    website="elifdikmen.com"
-    city="İstanbul, Türkiye"
-    age="23"
+    title={t('about.title')}
+    description={t('about.description')}
+    birthDate={t('about.birthDate')}
+    birthPlace={t('about.birthPlace')}
+    phone={t('about.phone')}
+    email={t('about.email')}
+    website={t('about.website')}
+    city={t('about.city')}
+    age={t('about.age')}
     imagePath="/img/self/portrait.jpg"
   />
   

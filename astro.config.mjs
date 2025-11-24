@@ -2,11 +2,15 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
+import pkg from 'astro-i18n';
+const { i18n } = pkg;
 
 export default defineConfig({
   // Tailwind CSS integration
-  integrations: [tailwind(), 
+  integrations: [
+    tailwind(),
     react(),
+    i18n(),
   ],
   
   // Your site URL
