@@ -7,43 +7,6 @@ import VideoShowcase from '../components/VideoShowcase.astro';
 import Portfolio from '../components/Portfolio.astro';
 import VideoGallery from '../components/VideoGallery.astro';
 
-// Experience data
-const experiences = [
-  {
-    date: '2020 - Günümüz',
-    title: 'Kıdemli Tasarımcı',
-    company: 'Kendi Markası',
-    description: 'Kendi moda markamı kurarak, özgün koleksiyonlar tasarlıyor ve pazar liderliği hedefiyle çalışıyorum.'
-  },
-  {
-    date: '2018 - 2020',
-    title: 'Moda Tasarımcısı',
-    company: 'Öncü Moda Markası',
-    description: 'Hazır giyim koleksiyonları için yenilikçi tasarımlar geliştirdim ve markanın pazar konumunu güçlendirdim.'
-  },
-  {
-    date: '2016 - 2018',
-    title: 'Asistan Tasarımcı',
-    company: 'Büyük Moda Evi',
-    description: 'Moda endüstrisindeki ilk adımlarımı atarak, koleksiyon geliştirme süreçlerinde aktif rol aldım.'
-  }
-];
-
-// Education data
-const education = [
-  {
-    date: '2016 - 2020',
-    degree: 'Moda Tasarımı',
-    institution: 'Marmara Üniversitesi',
-    description: 'Tasarım teorisi ve uygulama konusunda kapsamlı eğitim aldım.'
-  },
-  {
-    date: '2012 - 2016',
-    degree: 'Lise Diploması',
-    institution: 'Samsun Anadolu Lisesi',
-    description: 'Akademik temelleri oluşturduğum dönem.'
-  }
-];
 
 // Portfolio items - Add your actual images here
 import { portfolioItems } from './data/portfolios.js';
@@ -53,7 +16,11 @@ import { portfolioFilters } from './data/portfolioFilters.js'
 
 // Videos - Add your actual videos here
 import { videos } from './data/videos';
+
+// Video Showcase
+import { showcaseVideos } from './data/showcase'
 ---
+
 
 <Layout title="Elif Dikmen - Tasarımın Yenilikçi Mimarı">
   <Hero 
@@ -77,11 +44,7 @@ import { videos } from './data/videos';
   />
   
   <VideoShowcase 
-    videos={[
-      { src: '/images/self/video0.mp4', title: '' },
-      { src: '/images/self/video1.mp4', title: '' },
-      { src: '/images/self/video2.mp4', title: '' }
-    ]}
+    videos={showcaseVideos}
     title=""
   />
   
