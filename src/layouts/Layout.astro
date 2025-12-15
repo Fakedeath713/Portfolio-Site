@@ -2,6 +2,7 @@
 // src/layouts/Layout.astro
 const { title } = Astro.props;
 import GlobalLightbox from '../components/GlobalLightbox.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 ---
 
 <!DOCTYPE html>
@@ -24,6 +25,8 @@ import GlobalLightbox from '../components/GlobalLightbox.astro';
   <div class="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('/images/self/background_style_turned.png');"></div>
   
   <slot />
+  
+  <SpeedInsights />
 </body>
 </html>
 
